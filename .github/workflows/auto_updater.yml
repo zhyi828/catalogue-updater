@@ -1,0 +1,57 @@
+---
+name: Auto Catalogue Updater
+on: 
+  release:
+    types: [published]
+  push:
+    # tags:
+    # - 'v*'
+    branches: 
+      - master
+  # schedule:
+  #   - cron: "12 */3 * * *"
+  watch:
+    types: [started]
+
+jobs:
+  build:
+    services:
+      selenium:
+        image: selenium/standalone-chrome
+        ports:
+          - 4444:4444
+        # Add this back when deployed
+        # options: --health-cmd '/opt/bin/check-grid.sh'
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+      # with:
+      #   ref: 'init_test'
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install requests
+      run: |
+        pip install requests
+        pip install selenium
+    - name: Selenium Test
+      run: |
+        python selenium_test.py
+    - name: Commit
+      run: |
+        git config --global user.email update_bot@email.com
+        git config --global user.name AutoUpdater
+        git add lists
+        git commit -m "selenium test" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: files
+        path: files
