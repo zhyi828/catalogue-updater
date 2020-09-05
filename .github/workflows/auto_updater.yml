@@ -44,7 +44,7 @@ jobs:
         git config --global user.email update_bot@email.com
         git config --global user.name AutoUpdater
         git add lists
-        git commit -m "selenium test" -a
+        git diff-index --quiet HEAD || git commit -m "selenium test" -a
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
