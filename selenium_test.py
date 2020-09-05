@@ -1,5 +1,6 @@
 import os
 import requests
+import ruamel.yaml as yaml
 import time
 import json
 from selenium import webdriver
@@ -22,9 +23,9 @@ except Exception:
     print(f"!!!!!!!!!! LOGO FAILED !!!!!!!!!!")
 driver.close()
 
-with open("lists/brands_list.json", "r") as f:
-    brands_list = json.load(f)
-brands_list[time.time()] = time.ctime()
-brands_json = json.dumps(brands_list, indent=4)
-with open("lists/brands_list.json", "w+") as f:
-    f.write(brands_json)
+# with open("lists/brands_list.json", "r") as f:
+#     brands_list = json.load(f)
+# brands_list[time.time()] = time.ctime()
+# brands_json = json.dumps(brands_list, indent=4)
+# with open("lists/brands_list.json", "w+") as f:
+#     f.write(brands_json)

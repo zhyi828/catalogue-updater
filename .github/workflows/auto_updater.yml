@@ -35,11 +35,10 @@ jobs:
         python-version: 3.8
     - name: Install requests
       run: |
-        pip install requests
-        pip install selenium
+        pip install -r requirements.txt
     - name: Selenium Test
       run: |
-        python selenium_test.py
+        python catalogue_downloader.py
     - name: Commit
       run: |
         git config --global user.email update_bot@email.com
@@ -53,5 +52,8 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: files
-        path: files
+        name: artifacts
+        path: |
+          files
+          logs
+          lists
