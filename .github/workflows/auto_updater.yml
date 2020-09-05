@@ -54,6 +54,6 @@ jobs:
       with:
         name: artifacts
         path: |
-          files
-          logs
-          lists
+          files/
+          logs/
+          lists/
