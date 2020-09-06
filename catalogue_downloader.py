@@ -11,7 +11,7 @@ from selenium.webdriver.common import desired_capabilities
 
 
 log_time = (datetime.datetime.utcnow() + datetime.timedelta(hours=+8)).strftime("%Y-%m-%d_%H-%M-%S")
-USE_REMOTE_WEBDRIVER = False
+USE_REMOTE_WEBDRIVER = True
 
 
 def log(a_str, slient=False):
