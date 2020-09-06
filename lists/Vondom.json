@@ -1,0 +1,11 @@
+{
+  "brand": "Vondom",
+  "link": "https://www.davincilifestyle.com/contracts/vondom/",
+  "catalogues": {
+    "Ibiza Catalogue": "https://davincilifestyle.com/contracts/brands/vondom/ibiza_catalogue/ibiza_catalogue.html",
+    "Revolution": "https://davincilifestyle.com/contracts/brands/vondom/revolution/revolution.html",
+    "Designers": "https://davincilifestyle.com/contracts/brands/vondom/designers/designers.html",
+    "Contract": "https://davincilifestyle.com/contracts/brands/vondom/contract/contract.html",
+    "Studio": "https://davincilifestyle.com/contracts/brands/vondom/studio/studio.html"
+  }
+}

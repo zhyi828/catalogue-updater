@@ -1,0 +1,16 @@
+{
+  "brand": "Flexform",
+  "link": "https://www.davincilifestyle.com/contracts/flexform/",
+  "catalogues": {
+    "Indoor 2019": "https://davincilifestyle.com/contracts/brands/flexform/indoor_2019/indoor_2019.html",
+    "Catalogue 2018": "https://davincilifestyle.com/contracts/brands/flexform/catalog_2018/catalog_2018.html",
+    "New Entry 2018": "https://davincilifestyle.com/contracts/brands/flexform/news_2018/news_2018.html",
+    "Pocket 2018": "https://davincilifestyle.com/contracts/brands/flexform/pocket_2018/pocket_2018.html",
+    "Novelties 2018": "https://davincilifestyle.com/contracts/brands/flexform/mood_2018/mood_2018.html",
+    "Living": "https://davincilifestyle.com/contracts/brands/flexform/cat_living/cat_living.html",
+    "Sleeping": "https://davincilifestyle.com/contracts/brands/flexform/cat_sleeping/cat_sleeping.html",
+    "Ambience": "https://davincilifestyle.com/contracts/brands/flexform/cat_ambience/cat_ambience.html",
+    "Furnishing": "https://davincilifestyle.com/contracts/brands/flexform/cat_furnishing/cat_furnishing.html",
+    "Around The World": "https://davincilifestyle.com/contracts/brands/flexform/around_the_world/around_the_world.html"
+  }
+}

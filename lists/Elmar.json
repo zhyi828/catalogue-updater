@@ -1,0 +1,11 @@
+{
+  "brand": "Elmar",
+  "link": "https://www.davincilifestyle.com/contracts/elmar/",
+  "catalogues": {
+    "General Catalogue": "https://davincilifestyle.com/contracts/brands/elmar/general_catalogue/general_catalogue.html",
+    "Home System Catalogue": "https://davincilifestyle.com/contracts/brands/elmar/home_system_catalogue/home_system_catalogue.html",
+    "Bathroom Catalogue": "https://davincilifestyle.com/contracts/brands/elmar/bathroom_catalogue/bathroom_catalogue.html",
+    "Kitchen Philosophy Catalogue": "https://davincilifestyle.com/contracts/brands/elmar/kitchen_philosophy_catalogue/kitchen_philosophy_catalogue.html",
+    "Features": "https://davincilifestyle.com/contracts/brands/elmar/features/features.html"
+  }
+}

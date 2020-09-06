@@ -1,0 +1,10 @@
+{
+  "brand": "Lando",
+  "link": "https://www.davincilifestyle.com/contracts/lando/",
+  "catalogues": {
+    "Convivio": "https://www.davincilifestyle.com/contracts/brands/lando/lando_convivio/lando_convivio.html",
+    "Lando Convivio": "https://davincilifestyle.com/contracts/brands/lando/convivio/convivio.html",
+    "Convivio Brochure": "https://davincilifestyle.com/contracts/brands/lando/convivio_brochure/convivio_brochure.html",
+    "Golf Collection": "https://davincilifestyle.com/contracts/brands/lando/golf_collection/golf_collection.html"
+  }
+}

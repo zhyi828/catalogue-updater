@@ -22,10 +22,10 @@ jobs:
         # https://bugs.chromium.org/p/chromium/issues/detail?id=519952
         # https://stackoverflow.com/questions/53902507/unknown-error-session-deleted-because-of-page-crash-from-unknown-error-cannot/53970825
         options: --shm-size 2g
+        # Health check can make sure the container is healthy, but will slow down the process. Add this back when deployed
+        # options: --shm-size 2g --health-cmd '/opt/bin/check-grid.sh'
         ports:
           - 4444:4444
-        # Add this back when deployed
-        # options: --health-cmd '/opt/bin/check-grid.sh'
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:

@@ -1,0 +1,11 @@
+{
+  "brand": "Signorini & Coco",
+  "link": "https://www.davincilifestyle.com/contracts/signorinicoco/",
+  "catalogues": {
+    "Catalogue Soul": "https://davincilifestyle.com/contracts/brands/signorini%20coco/soul/soul.html",
+    "Catalogue Classico": "https://davincilifestyle.com/contracts/brands/signorini%20coco/classico-2019/classico-2019.html",
+    "Catalogue Lungarni": "https://davincilifestyle.com/contracts/brands/signorini%20coco/lungarni/lungarni.html",
+    "Catalogue Alchimie": "https://davincilifestyle.com/contracts/brands/signorini%20coco/alchimie/alchimie.html",
+    "Catalogue Magic Night": "https://davincilifestyle.com/contracts/brands/signorini%20coco/magic-night/magic-night.html"
+  }
+}

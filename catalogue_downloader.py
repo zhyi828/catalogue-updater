@@ -11,7 +11,7 @@ from selenium.webdriver.common import desired_capabilities
 
 
 log_time = (datetime.datetime.utcnow() + datetime.timedelta(hours=+8)).strftime("%Y-%m-%d_%H-%M-%S")
-USE_REMOTE_WEBDRIVER = True
+USE_REMOTE_WEBDRIVER = False
 
 
 def log(a_str, slient=False):
@@ -78,42 +78,75 @@ def get_all_brands_from_contracts(driver):
 
 
 @need_browser
-def verify_new_brands(driver, all_new_brands):
-    verified_new_brands = {}
-    for name, link in all_new_brands.items():
-        driver.get(link)
-        time.sleep(3)
-        if driver.current_url == "https://www.davincilifestyle.com/":
-            log("Brand: {} -> {} redirected to homepage.".format(name, link))
+def get_catalogues(driver, brand, homepage):
+    log(f"<---------- {brand} ---------->")
+    book_map = {}
+
+    # Visit brand homepage, if brand not exist, will redirect to website homepage.
+    driver.get(homepage)
+    time.sleep(3)
+    if driver.current_url == "https://www.davincilifestyle.com/":
+        log("Brand: {} -> {} redirected to homepage.".format(brand, homepage))
+        return False
+
+    # Try to get brand logo at brand homepage, if not exist, most likely this brand have no catalogue.
+    try:
+        logo_element = driver.find_element_by_css_selector(".vc_single_image-img.lazyloaded")
+        logo_link = logo_element.get_attribute("src")
+        os.makedirs("files/{}".format(brand), exist_ok=True)
+        r = requests.get(logo_link, stream=True, allow_redirects=False)
+        if r.status_code == 200:
+            open('files/{}/{}_logo.jpg'.format(brand, brand), 'wb').write(r.content)
+            log("========== LOGO SUCCESS {} -> {} ==========".format(brand, homepage))
+            del r
+    except selenium.common.exceptions.NoSuchElementException:
+        log("!!!!!!!!!! LOGO FAILED {} -> {} !!!!!!!!!!".format(brand, homepage))
+        return False
+
+    # Click 'catalogues' tab in brand homepage.
+    titles = driver.find_elements_by_css_selector("li.vc_tta-tab")
+    for title in titles:
+        log(title.find_element_by_css_selector("a>span").text)
+        if title.find_element_by_css_selector("a>span").text == "CATALOGUES":
+            title.click()
+            time.sleep(4)
+            break
+
+    books_element = driver.find_elements_by_css_selector("div.wpb_column.vc_column_container.vc_col-sm-3")
+    book_sum = 0
+    for book_element in books_element:
+        try:
+            book_name = book_element.find_element_by_css_selector('span[style]').text.title()
+            book_link = book_element.find_element_by_css_selector("a.vc_single_image-wrapper").get_attribute("href").split("#p")[0]
+            log(f"{book_name} -> {book_link}")
+            book_map[book_name] = book_link
+            book_sum += 1
+        except selenium.common.exceptions.NoSuchElementException:
             continue
-        else:
-            try:
-                logo_element = driver.find_element_by_css_selector(".vc_single_image-img.lazyloaded")
-                logo_link = logo_element.get_attribute("src")
-                os.makedirs("files/{}".format(name), exist_ok=True)
-                r = requests.get(logo_link, stream=True, allow_redirects=False)
-                if r.status_code == 200:
-                    open('files/{}/{}_logo.jpg'.format(name, name), 'wb').write(r.content)
-                    log("========== LOGO SUCCESS {} -> {} ==========".format(name, link))
-                    del r
-            except selenium.common.exceptions.NoSuchElementException:
-                log("!!!!!!!!!! LOGO FAILED {} -> {} !!!!!!!!!!".format(name, link))
-                continue
-            verified_new_brands.update({name: link})
-    return verified_new_brands
+    log(f"<---------- {brand} SUM: {book_sum} ---------->")
+    return book_map
 
 
 def check_new_brands(existing_brands, current_brands):
     log("<-------------------- check_new_brands -------------------->")
     all_new_brands = {}
+    new_brand_books = {}
     for brand_name, brand_link in current_brands.items():
         if not brand_link.endswith("/"):
             brand_link = brand_link + "/"
         if brand_link not in existing_brands.values():
             all_new_brands.update({brand_name: brand_link})
             log("We do not have brand: {} -> {}".format(brand_name, brand_link), slient=True)
-    verified_new_brands = verify_new_brands(all_new_brands=all_new_brands)
-    print(verified_new_brands)
+
+    for new_brand_name, new_brand_link in all_new_brands.items():
+        res = get_catalogues(brand=new_brand_name, homepage=new_brand_link)
+        if res:
+            new_brand_books[new_brand_name] = {
+                "brand": new_brand_name,
+                "link": new_brand_link,
+                "catalogues": res
+            }
+    log(new_brand_books)
 
 
 if __name__ == "__main__":
@@ -121,7 +154,6 @@ if __name__ == "__main__":
     for key, value in get_all_brands_from_contracts().items():
         if value not in brands_homepage_map.values():
             brands_homepage_map.update({key: value})
-            # log({key: value})
     log("Got {} brands in total.".format(len(brands_homepage_map)))
     with open("lists/brands_list.json", "r", encoding='utf-8') as brands_list_file:
         existing_brands = json.load(brands_list_file)

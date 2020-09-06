@@ -1,0 +1,24 @@
+{
+  "brand": "Giorgio Collection",
+  "link": "https://www.davincilifestyle.com/contracts/giorgio-collection/",
+  "catalogues": {
+    "Charisma": "https://davincilifestyle.com/contracts/brands/giorgio%20collection/charisma/charisma.html",
+    "Mini Catalogue": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/mini_catalogue/mini_catalogue.html",
+    "Infinity 2018": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/infinity-2018/infinity-2018.html",
+    "Technical Book 2018": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/technicalbook-2018/technicalbook-2018.html",
+    "Absolute": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/absolute/absolute.html",
+    "Alchemy": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/alchemy/alchemy.html",
+    "Coliseum": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/coliseum/coliseum.html",
+    "Lifetime": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/lifetime/lifetime.html",
+    "Luna": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/luna/luna.html",
+    "Monte Carlo": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/montecarlo/montecarlo.html",
+    "Paradiso": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/paradiso/paradiso.html",
+    "Picasso": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/picasso/picasso.html",
+    "Riosamba": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/riosamba/riosamba.html",
+    "Sunrise": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/sunrise/sunrise.html",
+    "Vanity": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/vanity/vanity.html",
+    "Vision": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/vision/vision.html",
+    "Vogue": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/vogue/vogue.html",
+    "Art Accessories": "https://www.davincilifestyle.com/contracts/brands/giorgio%20collection/art_accessories/art_accessories.html"
+  }
+}

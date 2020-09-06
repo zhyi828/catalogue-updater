@@ -1,0 +1,12 @@
+{
+  "brand": "Felis",
+  "link": "https://www.davincilifestyle.com/contracts/felis/",
+  "catalogues": {
+    "Larson": "https://davincilifestyle.com/contracts/brands/felis/larson/larson.html",
+    "Murakami": "https://davincilifestyle.com/contracts/brands/felis/murakami/murakami.html",
+    "Day & Night": "https://davincilifestyle.com/contracts/brands/felis/daynight/daynight.html",
+    "Evergreen": "https://davincilifestyle.com/contracts/brands/felis/evergreen/evergreen.html",
+    "Bed Stories 02": "https://davincilifestyle.com/contracts/brands/felis/bed_stories_02/bed_stories_02.html",
+    "Complements": "https://davincilifestyle.com/contracts/brands/felis/complements/complements.html"
+  }
+}

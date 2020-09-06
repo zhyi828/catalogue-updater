@@ -1,0 +1,11 @@
+{
+  "brand": "Lema",
+  "link": "https://www.davincilifestyle.com/contracts/lema/",
+  "catalogues": {
+    "Lt40": "https://davincilifestyle.com/contracts/brands/lema/lt40-book/lt40-book.html",
+    "News 2019": "https://davincilifestyle.com/contracts/brands/lema/news-2019/news-2019.html",
+    "In Habit Vol1": "https://davincilifestyle.com/contracts/brands/lema/in-habit-vol1/in-habit-vol1.html",
+    "Technical Book": "https://davincilifestyle.com/contracts/brands/lema/technical_book/technical_book.html",
+    "Selecta Book": "https://davincilifestyle.com/contracts/brands/lema/selecta-book/selecta-book.html"
+  }
+}

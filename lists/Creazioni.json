@@ -1,0 +1,11 @@
+{
+  "brand": "Creazioni",
+  "link": "https://www.davincilifestyle.com/contracts/creazioni/",
+  "catalogues": {
+    "Catalogue 2018": "https://davincilifestyle.com/contracts/brands/creazioni/catalogue_2018/catalogue_2018.html",
+    "Catalogue Fiera-2015": "https://davincilifestyle.com/contracts/brands/creazioni/fiera_2015/fiera_2015.html",
+    "Catalogue Novel Lake": "https://davincilifestyle.com/contracts/brands/creazioni/novel_lake/novel_lake.html",
+    "Catalogue Generale": "https://davincilifestyle.com/contracts/brands/creazioni/catalogue_generale/catalogue_generale.html",
+    "Catalogue Dipinti": "https://davincilifestyle.com/contracts/brands/creazioni/catalogue_dipinti/catalogue_dipinti.html"
+  }
+}
