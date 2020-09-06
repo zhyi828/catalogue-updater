@@ -18,6 +18,9 @@ jobs:
     services:
       selenium:
         image: selenium/standalone-chrome
+        # Need to change the shm size to avoid the browser crashing inside a docker container, See:
+        # https://bugs.chromium.org/p/chromium/issues/detail?id=519952
+        # https://stackoverflow.com/questions/53902507/unknown-error-session-deleted-because-of-page-crash-from-unknown-error-cannot/53970825
         options: --shm-size 2g
         ports:
           - 4444:4444
