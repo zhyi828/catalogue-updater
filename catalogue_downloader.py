@@ -45,7 +45,9 @@ def get_all_brands_from_sitemap(driver):
     raw_elements = driver.find_elements_by_css_selector("li .menu-item.menu-item-type-custom.menu-item-object-custom>a")
     for raw_element in raw_elements:
         link = raw_element.get_attribute("href")
-        if link and link.startswith("https://www.davincilifestyle.com/contracts/") and link != "https://www.davincilifestyle.com/contracts/":
+        if link and link.startswith("https://www.davincilifestyle.com/contracts/") \
+                and link != "https://www.davincilifestyle.com/contracts/" \
+                and link != "https://www.davincilifestyle.com/contracts/disclaimer/":
             log(f"{raw_element.text} -> {link}", slient=True)
             brands_homepage_map[raw_element.text] = link
     log("'get_all_brands_from_sitemap' got {} brands".format(len(brands_homepage_map)))
