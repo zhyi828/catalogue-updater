@@ -18,6 +18,7 @@ jobs:
     services:
       selenium:
         image: selenium/standalone-chrome
+        options: --shm-size 2g
         ports:
           - 4444:4444
         # Add this back when deployed
