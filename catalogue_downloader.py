@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 import os
+import time
 import requests
 import datetime
 import json
@@ -10,7 +11,7 @@ from selenium.webdriver.common import desired_capabilities
 
 
 log_time = (datetime.datetime.utcnow() + datetime.timedelta(hours=+8)).strftime("%Y-%m-%d_%H-%M-%S")
-USE_REMOTE_WEBDRIVER = True
+USE_REMOTE_WEBDRIVER = False
 
 
 def log(a_str, slient=False):
@@ -76,21 +77,55 @@ def get_all_brands_from_contracts(driver):
     return brands_homepage_map
 
 
+@need_browser
+def verify_new_brands(driver, all_new_brands):
+    verified_new_brands = {}
+    for name, link in all_new_brands.items():
+        driver.get(link)
+        time.sleep(3)
+        if driver.current_url == "https://www.davincilifestyle.com/":
+            log("Brand: {} -> {} redirected to homepage.".format(name, link))
+            continue
+        else:
+            try:
+                logo_element = driver.find_element_by_css_selector(".vc_single_image-img.lazyloaded")
+                logo_link = logo_element.get_attribute("src")
+                os.makedirs("files/{}".format(name), exist_ok=True)
+                r = requests.get(logo_link, stream=True, allow_redirects=False)
+                if r.status_code == 200:
+                    open('files/{}/{}_logo.jpg'.format(name, name), 'wb').write(r.content)
+                    log("========== LOGO SUCCESS {} -> {} ==========".format(name, link))
+                    del r
+            except selenium.common.exceptions.NoSuchElementException:
+                log("!!!!!!!!!! LOGO FAILED {} -> {} !!!!!!!!!!".format(name, link))
+                continue
+            verified_new_brands.update({name: link})
+    return verified_new_brands
+
+
 def check_new_brands(existing_brands, current_brands):
-    for brand_name, brand_link in current_brands:
+    log("<-------------------- check_new_brands -------------------->")
+    all_new_brands = {}
+    for brand_name, brand_link in current_brands.items():
+        if not brand_link.endswith("/"):
+            brand_link = brand_link + "/"
         if brand_link not in existing_brands.values():
-            pass
+            all_new_brands.update({brand_name: brand_link})
+            log("We do not have brand: {} -> {}".format(brand_name, brand_link), slient=True)
+    verified_new_brands = verify_new_brands(all_new_brands=all_new_brands)
+    print(verified_new_brands)
 
 
 if __name__ == "__main__":
     brands_homepage_map = get_all_brands_from_sitemap()
-    # for key, value in get_all_brands_from_contracts().items():
-    #     if value not in brands_homepage_map.values():
-    #         brands_homepage_map.update({key: value})
-    #         log({key: value})
-    # with open("lists/brands_list.json", "r", encoding='utf-8') as brands_list_file:
-    #     existing_brands = json.load(brands_list_file)
-    # check_new_brands(existing_brands, brands_homepage_map)
-    with open("lists/brands_list.json", "w+", encoding='utf-8') as brands_list_file:
-        # yaml.dump(brands_homepage_map, brands_list_file, Dumper=yaml.RoundTripDumper, explicit_start=True, encoding='utf-8')
-        json.dump(brands_homepage_map, brands_list_file, indent=2)
+    for key, value in get_all_brands_from_contracts().items():
+        if value not in brands_homepage_map.values():
+            brands_homepage_map.update({key: value})
+            # log({key: value})
+    log("Got {} brands in total.".format(len(brands_homepage_map)))
+    with open("lists/brands_list.json", "r", encoding='utf-8') as brands_list_file:
+        existing_brands = json.load(brands_list_file)
+    check_new_brands(existing_brands, brands_homepage_map)
+    # with open("lists/brands_list.json", "w+", encoding='utf-8') as brands_list_file:
+    #     # yaml.dump(brands_homepage_map, brands_list_file, Dumper=yaml.RoundTripDumper, explicit_start=True, encoding='utf-8')
+    #     json.dump(brands_homepage_map, brands_list_file, indent=2)
