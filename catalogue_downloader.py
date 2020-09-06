@@ -61,11 +61,11 @@ def get_all_brands_from_contracts(driver):
     for raw_element in raw_elements:
         try:
             brand_logo = raw_element.find_element_by_css_selector(".vc_single_image-wrapper.vc_box_outline.vc_box_border_white")
-            brand_img = raw_element.find_element_by_css_selector(".vc_single_image-img")
+            brand_name = raw_element.find_element_by_css_selector("div.wpb_wrapper>p>span")
         except selenium.common.exceptions.NoSuchElementException:
             continue
         link = brand_logo.get_attribute("href")
-        brand_name = brand_img.get_attribute("alt")
+        brand_name = brand_name.text
         if isinstance(brand_name, str):
             brand_name = brand_name.title()
         else:
@@ -126,6 +126,8 @@ if __name__ == "__main__":
     with open("lists/brands_list.json", "r", encoding='utf-8') as brands_list_file:
         existing_brands = json.load(brands_list_file)
     check_new_brands(existing_brands, brands_homepage_map)
+
+
     # with open("lists/brands_list.json", "w+", encoding='utf-8') as brands_list_file:
     #     # yaml.dump(brands_homepage_map, brands_list_file, Dumper=yaml.RoundTripDumper, explicit_start=True, encoding='utf-8')
     #     json.dump(brands_homepage_map, brands_list_file, indent=2)
