@@ -148,7 +148,7 @@ def check_new_brands(existing_brands, current_brands):
                 "link": new_brand_link,
                 "catalogues": res
             }
-    log(new_brand_books)
+    log("New brand catalogues need to download:\n{}".format(json.dumps(new_brand_books, indent=2)))
 
 
 if __name__ == "__main__":
