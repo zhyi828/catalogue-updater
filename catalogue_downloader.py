@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 import os
+import sys
 import time
 import requests
 import datetime
@@ -16,7 +17,7 @@ USE_REMOTE_WEBDRIVER = True
 
 def log(a_str, slient=False):
     if not slient:
-        print(a_str)
+        print(a_str, file=sys.stderr)
     global log_time
     with open(f'logs/log_{log_time}.txt', 'a') as f:
         print(a_str, file=f)
