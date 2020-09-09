@@ -149,19 +149,74 @@ def check_new_brands(existing_brands, current_brands):
                 "catalogues": res
             }
     log("New brand catalogues need to download:\n{}".format(json.dumps(new_brand_books, indent=2)))
+    return new_brand_books
+
+
+def download_img(page_num, book_link, brand, book_name):
+    img_url = f"{book_link}{page_num}.jpg"
+    log("☐ " + img_url, slient=True)
+    retries = 0
+
+    while retries < 11:
+        try:
+            r = requests.get(img_url, stream=True, allow_redirects=False, timeout=20)
+            if r.status_code == 200:
+                open(f'files/{brand}/{book_name}/{page_num}.jpg', 'wb').write(r.content)
+                del r
+                while os.path.getsize(f'files/{brand}/{book_name}/{page_num}.jpg') <= 0:
+                    rn = requests.get(img_url, stream=True, allow_redirects=False, timeout=20)
+                    open(f'files/{brand}/{book_name}/{page_num}.jpg', 'wb').write(rn.content)
+                    del rn
+                log(f'☑ files/{brand}/{book_name}/{page_num}.jpg', slient=True)
+                return True
+            elif r.status_code == 301:
+                log(f"{brand}->{book_name} Max page: {page_num - 1}")
+                del r
+                return False
+            else:
+                log(r.status_code)
+                raise ValueError(f"{img_url} got {r.status_code}!")
+        except Exception:
+            retries += 1
+            log("!!!RETRYING!!!")
+            time.sleep(5)
+    raise ValueError("Max retries reached")
+
+
+def download_catalogue(brand, brand_map):
+    for book_name, book_link in brand_map.items():
+        log(f"<----- {brand}->{book_name} -----")
+        os.makedirs(f"files/{brand}/{book_name}", exist_ok=True)
+        splited_book_link = book_link.split("/")
+        splited_book_link[-1] = 'files/mobile/'
+        book_link = "/".join(splited_book_link)
+        for i in range(1, 9999):
+            if not download_img(i, book_link, brand, book_name):
+                break
+        log(f"----- {brand}->{book_name} ----->")
 
 
 if __name__ == "__main__":
+    # NEW BRAND
+    # Get brand list from sitemap
     brands_homepage_map = get_all_brands_from_sitemap()
+    # Get brand list from contracts and update the sitemap one
     for key, value in get_all_brands_from_contracts().items():
         if value not in brands_homepage_map.values():
             brands_homepage_map.update({key: value})
     log("Got {} brands in total.".format(len(brands_homepage_map)))
+    # Get existing brand list from json file
     with open("lists/brands_list.json", "r", encoding='utf-8') as brands_list_file:
         existing_brands = json.load(brands_list_file)
-    check_new_brands(existing_brands, brands_homepage_map)
+    # Check all valid brands we do not have, and get their catalogue links
+    new_brand_books = check_new_brands(existing_brands, brands_homepage_map)
+    # Download new brands catalogues
+    for brand_dict in new_brand_books.values():
+        log("^^^^^^^^^^ {} ^^^^^^^^^^".format(brand_dict["brand"]))
+        download_catalogue(brand_dict["brand"], brand_dict["catalogues"])
+        log("vvvvvvvvvv {} vvvvvvvvvv".format(brand_dict["brand"]))
 
 
-    # with open("lists/brands_list.json", "w+", encoding='utf-8') as brands_list_file:
-    #     # yaml.dump(brands_homepage_map, brands_list_file, Dumper=yaml.RoundTripDumper, explicit_start=True, encoding='utf-8')
-    #     json.dump(brands_homepage_map, brands_list_file, indent=2)
+
+    # with open("lists/brands_list.yaml", "w+", encoding='utf-8') as brands_list_file:
+    #     yaml.dump(brands_homepage_map, brands_list_file, Dumper=yaml.RoundTripDumper, explicit_start=True, encoding='utf-8')
