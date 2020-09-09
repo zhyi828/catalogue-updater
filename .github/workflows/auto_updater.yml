@@ -41,6 +41,10 @@ jobs:
       run: |
         pip install -r requirements.txt
     - name: Selenium Test
+      env:
+        SEND_FROM: ${{ secrets.SEND_FROM }}
+        SEND_TO: ${{ secrets.SEND_TO }}
+        SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       run: |
         python catalogue_downloader.py
     - name: Commit
