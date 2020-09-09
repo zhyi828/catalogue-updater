@@ -157,7 +157,7 @@ def check_new_brands(existing_brands, current_brands):
 
 def download_img(page_num, book_link, brand, book_name):
     img_url = f"{book_link}{page_num}.jpg"
-    log("☐ " + img_url, slient=True)
+    log("☐ " + img_url, slient=False)
     retries = 0
 
     while retries < 11:
