@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 import smtplib
 import os
+import zipfile
 import datetime
 from os.path import basename
 from email.mime.application import MIMEApplication
@@ -25,6 +26,13 @@ def send_mail(send_from, send_to, subject, text, password, use_tls=True, files=N
     msg.attach(MIMEText(text))
 
     for f in files or []:
+        if os.path.isdir(f):
+            zippath = f + ".zip"
+            zipf = zipfile.ZipFile(zippath, 'w', zipfile.ZIP_DEFLATED)
+            for root, dirs, files in os.walk(f):
+                for file in files:
+                    zipf.write(os.path.join(root, file))
+            f = zippath
         with open(f, "rb") as fil:
             part = MIMEApplication(
                 fil.read(),

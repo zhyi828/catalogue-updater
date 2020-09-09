@@ -1,6 +1,5 @@
 # -*- coding: utf8 -*-
 import os
-import sys
 import time
 import requests
 import datetime
@@ -13,11 +12,14 @@ from selenium.webdriver.common import desired_capabilities
 
 log_time = (datetime.datetime.utcnow() + datetime.timedelta(hours=+8)).strftime("%Y-%m-%d_%H-%M-%S")
 USE_REMOTE_WEBDRIVER = True
+send_from = os.environ.get("SEND_FROM")
+send_to_list = os.environ.get("SEND_TO").split(",")
+smtp_password = os.environ.get("SMTP_PASSWORD")
 
 
 def log(a_str, slient=False):
     if not slient:
-        print(a_str, file=sys.stderr)
+        print(a_str)
     global log_time
     with open(f'logs/log_{log_time}.txt', 'a') as f:
         print(a_str, file=f)
@@ -215,6 +217,14 @@ if __name__ == "__main__":
     for brand_dict in new_brand_books.values():
         log("^^^^^^^^^^ {} ^^^^^^^^^^".format(brand_dict["brand"]))
         download_catalogue(brand_dict["brand"], brand_dict["catalogues"])
+        send_mail(
+            send_from,
+            send_to_list,
+            "[DaVinci]有新的品牌{}".format(brand_dict["brand"]),
+            "请将压缩包中的文件直接解压到Da Vinci Lifestyle/根目录下",
+            smtp_password,
+            files=["files/{}".format(brand_dict["brand"])]
+        )
         log("vvvvvvvvvv {} vvvvvvvvvv".format(brand_dict["brand"]))
 
 
