@@ -10,7 +10,8 @@ from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate
 
 
-def send_mail(send_from, send_to, subject, text, password, use_tls=True, files=None):
+def send_mail(send_from, send_to, subject, text, password, use_tls=True, files=None,
+              server="smtp.126.com"):
     assert isinstance(send_to, list)
 
     msg = MIMEMultipart()
@@ -41,7 +42,7 @@ def send_mail(send_from, send_to, subject, text, password, use_tls=True, files=N
         part['Content-Disposition'] = 'attachment; filename="%s"' % basename(f)
         msg.attach(part)
 
-    smtp = smtplib.SMTP('smtp.gmail.com', 587)
+    smtp = smtplib.SMTP(server)
     if use_tls:
         smtp.starttls()
     smtp.set_debuglevel(1)  # Set 1 for email log
