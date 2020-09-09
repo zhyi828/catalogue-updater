@@ -44,7 +44,7 @@ def send_mail(send_from, send_to, subject, text, password, use_tls=True, files=N
     smtp = smtplib.SMTP('smtp.gmail.com', 587)
     if use_tls:
         smtp.starttls()
-    smtp.set_debuglevel(0)  # Set 1 for email log
+    smtp.set_debuglevel(1)  # Set 1 for email log
     smtp.login(send_from, password)
     smtp.sendmail(send_from, send_to, msg.as_string())
     smtp.close()
