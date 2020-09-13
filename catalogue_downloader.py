@@ -15,6 +15,8 @@ USE_REMOTE_WEBDRIVER = True
 send_from = os.environ.get("SEND_FROM")
 send_to_list = os.environ.get("SEND_TO").split(",")
 smtp_password = os.environ.get("SMTP_PASSWORD")
+GITHUB_RUN_ID = os.environ.get("GITHUB_RUN_ID")
+print(GITHUB_RUN_ID)
 
 
 def log(a_str, slient=False):
@@ -213,20 +215,20 @@ if __name__ == "__main__":
         existing_brands = json.load(brands_list_file)
     # Check all valid brands we do not have, and get their catalogue links
     new_brand_books = check_new_brands(existing_brands, brands_homepage_map)
+
     # Download new brands catalogues
     for brand_dict in new_brand_books.values():
         log("^^^^^^^^^^ {} ^^^^^^^^^^".format(brand_dict["brand"]))
         download_catalogue(brand_dict["brand"], brand_dict["catalogues"])
-        send_mail(
-            send_from,
-            send_to_list,
-            "[DaVinci]有新的品牌{}".format(brand_dict["brand"]),
-            "请将压缩包中的文件直接解压到Da Vinci Lifestyle/根目录下",
-            smtp_password,
-            files=["files/{}".format(brand_dict["brand"])]
-        )
+        # send_mail(
+        #     send_from,
+        #     send_to_list,
+        #     "[DaVinci]有新的品牌{}".format(brand_dict["brand"]),
+        #     "请将压缩包中的文件直接解压到Da Vinci Lifestyle/根目录下",
+        #     smtp_password,
+        #     files=["files/{}".format(brand_dict["brand"])]
+        # )
         log("vvvvvvvvvv {} vvvvvvvvvv".format(brand_dict["brand"]))
-
 
 
     # with open("lists/brands_list.yaml", "w+", encoding='utf-8') as brands_list_file:
