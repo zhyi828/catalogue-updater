@@ -66,5 +66,5 @@ jobs:
           logs/
           lists/
     - name: Sleep
-        run: |
-          python personal_tool.py
+      run: |
+        python personal_tool.py
