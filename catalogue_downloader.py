@@ -15,8 +15,11 @@ USE_REMOTE_WEBDRIVER = True
 send_from = os.environ.get("SEND_FROM")
 send_to_list = os.environ.get("SEND_TO").split(",")
 smtp_password = os.environ.get("SMTP_PASSWORD")
-GITHUB_RUN_ID = os.environ.get("GITHUB_RUN_ID")
-print(GITHUB_RUN_ID)
+print(os.environ.get("GITHUB_WORKFLOW"))
+print(os.environ.get("GITHUB_RUN_ID"))
+print(os.environ.get("GITHUB_RUN_NUMBER"))
+print(os.environ.get("GITHUB_ACTION"))
+print(os.environ.get("GITHUB_WORKSPACE"))
 
 
 def log(a_str, slient=False):
