@@ -46,7 +46,7 @@ jobs:
         SEND_TO: ${{ secrets.SEND_TO }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       run: |
-        python catalogue_downloader.py
+        python -u catalogue_downloader.py
     - name: Commit
       run: |
         git config --global user.email update_bot@email.com
@@ -67,4 +67,4 @@ jobs:
           lists/
     - name: Sleep
       run: |
-        python personal_tool.py
+        python -u personal_tool.py
